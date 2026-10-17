@@ -40,5 +40,5 @@ function clientIp(request: NextRequest): string {
 
 export const config = {
   // Not static assets, and not /up: kamal-proxy polls it during every deploy.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|up$).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg|up$).*)"],
 };
