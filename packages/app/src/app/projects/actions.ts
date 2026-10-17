@@ -2,18 +2,26 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { sharedRateLimiter } from "@atl/core";
 import { MAX_PROJECTS_PER_USER, ProjectLimitError } from "@atl/db";
 import { formValues, projectSchema, type ProjectFormState } from "@/lib/project-schema";
-import { canEdit, requireViewer } from "@/server/auth";
+import { canEdit, requireViewer, type Viewer } from "@/server/auth";
 import { requestScope } from "@/server/container";
 
 // Every action re-checks the session and the permissions itself: anyone can call a server action.
+
+// Per person, on top of the per-IP limit in proxy.ts. Deletes aren't counted: you can only delete
+// what you created, and creating is limited here and by MAX_PROJECTS_PER_USER.
+const HOUR = 60 * 60_000;
+const projectWrites = sharedRateLimiter("user:project-writes", { limit: 30, windowMs: HOUR });
 
 export async function createProject(prev: ProjectFormState, formData: FormData): Promise<ProjectFormState> {
   const viewer = await requireViewer("/projects/new");
   const values = formValues(formData);
   const parsed = projectSchema.safeParse(values);
   if (!parsed.success) return invalid(prev, values, parsed.error);
+  const limited = rateLimited(viewer, prev, values);
+  if (limited) return limited;
 
   const { projects } = (await requestScope()).cradle;
   let slug: string;
@@ -45,6 +53,8 @@ export async function updateProject(
   const values = formValues(formData);
   const parsed = projectSchema.safeParse(values);
   if (!parsed.success) return invalid(prev, values, parsed.error);
+  const limited = rateLimited(viewer, prev, values);
+  if (limited) return limited;
 
   await projects.update(project, parsed.data);
   redirect(`/projects/${project.slug}`);
@@ -56,6 +66,23 @@ export async function deleteProject(id: number): Promise<void> {
   const viewer = await requireViewer("/me");
   if (project && canEdit(viewer, project)) await projects.remove(project);
   redirect(viewer.isAdmin && project?.owner.id !== viewer.user.id ? "/admin" : "/me");
+}
+
+/** Counts one project write for the viewer; returns the form state to show if over the limit. */
+function rateLimited(
+  viewer: Viewer,
+  prev: ProjectFormState,
+  values: ProjectFormState["values"],
+): ProjectFormState | null {
+  if (viewer.isAdmin) return null;
+  const { ok, retryAfterSeconds } = projectWrites.hit(String(viewer.user.id));
+  if (ok) return null;
+  const minutes = Math.ceil(retryAfterSeconds / 60);
+  return {
+    attempt: prev.attempt + 1,
+    values,
+    message: `That's 30 changes this hour, which is quite enough for anyone. Have a cup of tea and try again in ${minutes} minute${minutes === 1 ? "" : "s"}. Your answers are still below.`,
+  };
 }
 
 function invalid(
