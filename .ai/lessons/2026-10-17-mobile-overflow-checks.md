@@ -26,3 +26,10 @@ the screen, so the whole page could be scrolled sideways:
 - Pace any sweep: the proxy allows 120 requests per minute per IP, and each page view with `<Link>`
   prefetching costs roughly 6–26 of them. Past the limit you are screenshotting the 429 page, which has no
   viewport meta and reports 981px.
+
+## The opposite trap: `min-w-0 flex-1` in a wrapping row (2026-10-18)
+
+`min-w-0` is not free. In `/docs5`'s road diagram a stop row was `flex flex-wrap` with the name as
+`min-w-0 flex-1` followed by gate badges. A `flex-1` item has a basis of 0, and `min-w-0` lets it shrink to
+nothing, so the row never wraps: the name gives way instead, and "Discovery & Design" rendered one letter per line.
+Give a label that shares a wrapping row a real minimum (`min-w-28`), so the badges wrap rather than the word.
