@@ -24,9 +24,9 @@ export async function createProject(prev: ProjectFormState, formData: FormData):
   if (limited) return limited;
 
   const { projects } = (await requestScope()).cradle;
-  let slug: string;
+  let id: number;
   try {
-    slug = (await projects.create(viewer.user, parsed.data)).slug;
+    id = (await projects.create(viewer.user, parsed.data)).id;
   } catch (error) {
     if (!(error instanceof ProjectLimitError)) throw error;
     return {
@@ -35,7 +35,7 @@ export async function createProject(prev: ProjectFormState, formData: FormData):
       message: `You already have ${MAX_PROJECTS_PER_USER} projects. Finish one. Or let one pine for the fjords and delete it.`,
     };
   }
-  redirect(`/projects/${slug}`);
+  redirect(`/projects/${id}`);
 }
 
 export async function updateProject(
@@ -45,7 +45,7 @@ export async function updateProject(
 ): Promise<ProjectFormState> {
   const { projects } = (await requestScope()).cradle;
   const project = await projects.findById(id);
-  const viewer = await requireViewer(project ? `/projects/${project.slug}/edit` : "/");
+  const viewer = await requireViewer(project ? `/projects/${project.id}/edit` : "/");
   if (!project || !canEdit(viewer, project)) {
     return { attempt: prev.attempt + 1, message: "None shall pass. This project isn't yours to change." };
   }
@@ -57,7 +57,7 @@ export async function updateProject(
   if (limited) return limited;
 
   await projects.update(project, parsed.data);
-  redirect(`/projects/${project.slug}`);
+  redirect(`/projects/${project.id}`);
 }
 
 export async function deleteProject(id: number): Promise<void> {

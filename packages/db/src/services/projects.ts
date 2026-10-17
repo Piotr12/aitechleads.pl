@@ -47,10 +47,6 @@ export function createProjectService({ em }: { em: EntityManager }) {
       return em.find(Project, { owner }, { populate: ["owner"], orderBy: { updatedAt: "desc" } });
     },
 
-    findBySlug(slug: string): Promise<Project | null> {
-      return em.findOne(Project, { slug }, { populate: ["owner"] });
-    },
-
     findById(id: number): Promise<Project | null> {
       return em.findOne(Project, { id }, { populate: ["owner"] });
     },
@@ -62,14 +58,13 @@ export function createProjectService({ em }: { em: EntityManager }) {
       const project = em.create(Project, {
         ...input,
         owner,
-        slug: await uniqueSlug(em, input.title),
         hidden: false,
       });
       await em.flush();
       return project;
     },
 
-    /** Updates the fields; the slug stays as it was, so links keep working. */
+    /** Updates the fields; the id (and so the address) never changes. */
     async update(project: Project, input: ProjectInput): Promise<Project> {
       em.assign(project, input);
       await em.flush();
@@ -98,28 +93,3 @@ export function createProjectService({ em }: { em: EntityManager }) {
 
 export type ProjectService = ReturnType<typeof createProjectService>;
 
-/** "Zażółć gęślą jaźń!" → "zazolc-gesla-jazn", plus "-2", "-3"… if that's taken. */
-export function slugify(title: string): string {
-  const slug = title
-    .replace(/[łŁ]/g, "l")
-    .normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60)
-    .replace(/-+$/, "");
-  return slug || "project";
-}
-
-async function uniqueSlug(em: EntityManager, title: string): Promise<string> {
-  const base = slugify(title);
-  const taken = new Set(
-    (await em.find(Project, { slug: { $like: `${base}%` } }, { fields: ["slug"] })).map(
-      (project) => project.slug,
-    ),
-  );
-  let slug = base;
-  for (let n = 2; taken.has(slug); n++) slug = `${base}-${n}`;
-  return slug;
-}

@@ -10,12 +10,13 @@ import { DeleteProjectButton } from "@/components/delete-project-button";
 import { StatusBadge } from "@/components/status-badge";
 import { UserChip } from "@/components/user-chip";
 import { deleteProject } from "@/app/projects/actions";
+import { parseProjectId } from "@/lib/project-id";
 import { canEdit, getViewer } from "@/server/auth";
 import { requestScope } from "@/server/container";
 
 export const metadata: Metadata = { title: "Project" };
 
-export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
+export default function ProjectPage({ params }: PageProps<"/projects/[id]">) {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-12 sm:px-6">
       <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
@@ -28,11 +29,12 @@ export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   );
 }
 
-async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "params">) {
+async function ProjectDetails({ params }: Pick<PageProps<"/projects/[id]">, "params">) {
   await connection();
-  const { slug } = await params;
+  const id = parseProjectId((await params).id);
+  if (!id) notFound();
   const viewer = await getViewer();
-  const project = await (await requestScope()).cradle.projects.findBySlug(slug);
+  const project = await (await requestScope()).cradle.projects.findById(id);
   // Hidden projects are visible to their owner and admins only.
   if (!project || (project.hidden && !canEdit(viewer, project))) notFound();
 
@@ -88,7 +90,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
           <Separator />
           <div className="flex gap-2">
             <Button asChild variant="outline">
-              <Link href={`/projects/${project.slug}/edit`}>Edit</Link>
+              <Link href={`/projects/${project.id}/edit`}>Edit</Link>
             </Button>
             <DeleteProjectButton title={project.title} action={deleteProject.bind(null, project.id)} />
           </div>

@@ -10,7 +10,6 @@ export const Project = defineEntity({
   name: "Project",
   properties: {
     id: p.integer().primary(),
-    slug: p.string().unique(),
     title: p.string(),
     summary: p.string().length(280),
     description: p.text().nullable(),

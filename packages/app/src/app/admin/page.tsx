@@ -103,7 +103,7 @@ async function Admin() {
               {all.map((project) => (
                 <TableRow key={project.id}>
                   <TableCell className="max-w-64 truncate">
-                    <Link href={`/projects/${project.slug}`} className="hover:underline">
+                    <Link href={`/projects/${project.id}`} className="hover:underline">
                       {project.title}
                     </Link>
                     {project.hidden && (

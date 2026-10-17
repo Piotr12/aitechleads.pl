@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { ProjectForm } from "@/components/project-form";
 import { updateProject } from "@/app/projects/actions";
+import { parseProjectId } from "@/lib/project-id";
 import { canEdit, requireViewer } from "@/server/auth";
 import { requestScope } from "@/server/container";
 
 export const metadata: Metadata = { title: "Edit project" };
 
-export default function EditProjectPage({ params }: PageProps<"/projects/[slug]/edit">) {
+export default function EditProjectPage({ params }: PageProps<"/projects/[id]/edit">) {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-12 sm:px-6">
       <Suspense fallback={<p className="text-sm text-muted-foreground">Ook.</p>}>
@@ -19,11 +20,12 @@ export default function EditProjectPage({ params }: PageProps<"/projects/[slug]/
   );
 }
 
-async function EditProject({ params }: Pick<PageProps<"/projects/[slug]/edit">, "params">) {
+async function EditProject({ params }: Pick<PageProps<"/projects/[id]/edit">, "params">) {
   await connection();
-  const { slug } = await params;
-  const viewer = await requireViewer(`/projects/${slug}/edit`);
-  const project = await (await requestScope()).cradle.projects.findBySlug(slug);
+  const id = parseProjectId((await params).id);
+  if (!id) notFound();
+  const viewer = await requireViewer(`/projects/${id}/edit`);
+  const project = await (await requestScope()).cradle.projects.findById(id);
   if (!project) notFound();
 
   if (!canEdit(viewer, project)) {
@@ -56,7 +58,7 @@ async function EditProject({ params }: Pick<PageProps<"/projects/[slug]/edit">, 
           tags: project.tags.join(", "),
         }}
         submitLabel="Save changes"
-        cancelHref={`/projects/${project.slug}`}
+        cancelHref={`/projects/${project.id}`}
       />
     </>
   );

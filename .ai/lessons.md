@@ -16,6 +16,9 @@ The `[details]` link is optional — add a file in [`lessons/`](lessons/) only w
 - **2026-10-17 — GitHub Actions secret names can't start with `GITHUB_`** — so the OAuth credentials are `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` everywhere (Actions secret, `.kamal/secrets`, env, `loadConfig`). Keep one name per value end to end.
 - **2026-10-17 — shadcn v4 imports `cn` from the `cn` npm package** — `import { cn } from "cn"` in generated components is correct, not a broken alias. The `new-york` style is legacy; this repo uses `radix-nova`.
 
+- **2026-10-17 — Project URLs use the integer id, not a stored slug** — the slug was made from the title at creation and never changed, so "test" renamed to "CPG" still lived at `/projects/test`. Routes are now `/projects/[id]` (parsed with `parseProjectId`) and the `slug` column is gone; don't bring back stored slugs.
+- **2026-10-17 — "Text is cut off" may be unsaved edits** — the details page showed exactly what the database held; the newer text existed only in an edit form that was never saved. Compare with the stored row before touching CSS.
+
 ## Next.js
 
 - **2026-10-17 — One ORM per bundle, keyed by entity identity** — Next.js gives route handlers, pages and instrumentation separate copies of `@atl/db`, and MikroORM matches entities by object identity. Never cache the container/ORM on `globalThis` under a string key; `getContainer()` keys it by the `entities` array. [details](lessons/2026-10-17-mikroorm-entity-identity-next-bundles.md)

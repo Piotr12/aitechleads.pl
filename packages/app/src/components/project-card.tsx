@@ -14,7 +14,7 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.hidden && <Badge variant="destructive">Hidden</Badge>}
         </div>
         <CardTitle className="text-lg">
-          <Link href={`/projects/${project.slug}`} className="hover:underline">
+          <Link href={`/projects/${project.id}`} className="hover:underline">
             {project.title}
           </Link>
         </CardTitle>
