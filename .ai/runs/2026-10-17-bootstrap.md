@@ -1,4 +1,4 @@
-# Bootstrap aitechleads.pl from the CPG skeleton: GitHub login + project CRUD
+# Bootstrap aitechleads.pl: GitHub login + project CRUD
 
 **Date:** 2026-10-17
 **Agent:** Claude Code (claude-opus-5-5)
@@ -7,7 +7,7 @@
 
 ## Goal
 
-Copy the CPG skeleton (Next.js 16 monorepo, SQLite/MikroORM, Awilix, shadcn, Kamal) into this repo, renamed for aitechleads.pl, same VM (146.59.105.8), data in `/externaldata/aitechleads.pl`. Build a GitHub-login CRUD for projects people do as part of (or inspired by) the AI Tech Leaders training, which this site is **not** affiliated with. Copy: Monty Python / Pratchett humour. Decisions from the human:
+Copy an existing project skeleton (Next.js 16 monorepo, SQLite/MikroORM, Awilix, shadcn, Kamal) into this repo, renamed for aitechleads.pl, same VM (146.59.105.8), data in `/externaldata/aitechleads.pl`. Build a GitHub-login CRUD for projects people do as part of (or inspired by) the AI Tech Leaders training, which this site is **not** affiliated with. Copy: Monty Python / Pratchett humour. Decisions from the human:
 
 - Arctic + database sessions, and zod, are OK.
 - The project list is public; any GitHub account can sign in.
@@ -20,14 +20,14 @@ Copy the CPG skeleton (Next.js 16 monorepo, SQLite/MikroORM, Awilix, shadcn, Kam
 
 ## Log
 
-- Copied CPG `HEAD` via `git archive`. Dropped CPG run logs, kept lessons. Renamed:
-  - `@cpg/*` → `@atl/*`
-  - `cpg.sqlite` → `aitechleads.sqlite`
+- Copied the skeleton's `HEAD` via `git archive`. Dropped its run logs, kept lessons. Renamed:
+  - package scope → `@atl/*`
+  - database file → `aitechleads.sqlite`
   - Kamal service and image → `aitechleads`
   - volume and hosts → aitechleads.pl
 - Regenerated `package-lock.json` and a fresh initial migration (no DB existed yet).
 - `SSH_PRIVATE_KEY`: verified `~/.ssh/my_slovenia_vm1_key` logs in to `ubuntu@146.59.105.8`, then set it on `Piotr12/aitechleads.pl` with `gh secret set`.
-- VM check (read-only): `/externaldata/aitechleads.pl` exists, mode 777; `kamal-proxy` and `cpg-web` running.
+- VM check (read-only): `/externaldata/aitechleads.pl` exists, mode 777; `kamal-proxy` running.
 - Entities: `User` (githubId unique), `Session` (id = sha256(token), cascade on user delete), `Project` (unique slug, status enum, JSON tags, owner, `hidden` for moderation). Services `projects` / `sessions` registered by `registerDb` (scoped).
 - `requestScope()` is now memoized per request with React `cache`. Otherwise the session check and the page would use different `em` forks, which is a problem when passing the viewer's `User` entity into `projects.create`.
 - OAuth secret names: GitHub forbids Actions secrets starting with `GITHUB_`, so it's `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` throughout.
@@ -39,7 +39,7 @@ Copy the CPG skeleton (Next.js 16 monorepo, SQLite/MikroORM, Awilix, shadcn, Kam
 
 ## Changes
 
-- Whole repo bootstrapped from CPG, see the commit.
+- Whole repo bootstrapped from the skeleton, see the commit.
 - New in `packages/db/src`:
   - `entities/User.ts`, `Session.ts`, `Project.ts`
   - `services/projects.ts`, `services/sessions.ts`

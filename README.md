@@ -14,9 +14,10 @@ What it does:
   - *(Shipped) Shrubbery delivered*: shipped.
   - *(Abandoned) Pining for the fjords*: resting. Definitely resting.
 - **Public list** with search, status and tag filters. Anyone can read; signing in with any GitHub account lets you add, edit and delete *your own* projects.
+- **Rate limits**, caveman style: per IP 120 page requests and 20 writes a minute (`429` after that), per person 30 project changes an hour and 25 projects in total.
 - **The Patrician's office** (`/admin`): admins (GitHub user IDs in `ADMIN_GITHUB_IDS`) can hide, unhide or delete any project.
 
-Built on the [CPG](https://github.com/Piotr12/CPG) skeleton by an LLM, while a human watched, raised an eyebrow, and occasionally said "Ni!".
+Built by an LLM, while a human watched, raised an eyebrow, and occasionally said "Ni!".
 
 ## Architecture
 
@@ -29,7 +30,7 @@ Built on the [CPG](https://github.com/Piotr12/CPG) skeleton by an LLM, while a h
 | Dependency injection | Awilix |
 | Styling | shadcn/ui components + Tailwind CSS 4 |
 | Repo layout | npm workspaces monorepo |
-| Deployment | Docker + Kamal on a single VM (shared with CPG), from GitHub Actions |
+| Deployment | Docker + Kamal on a single VM, from GitHub Actions |
 
 ```
 packages/
@@ -67,7 +68,7 @@ Without OAuth credentials, the site still works read-only, and the login page sa
 
 ## Deployment
 
-Pushing to `main` builds the Docker image and deploys it with Kamal (`config/deploy.yml`, `.github/workflows/deploy.yml`) to the VM that also hosts CPG.
+Pushing to `main` builds the Docker image and deploys it with Kamal (`config/deploy.yml`, `.github/workflows/deploy.yml`) to the VM.
 
 Before the first deploy:
 
