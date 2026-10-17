@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { ROLES, neighbours } from "../_data/model";
 import { cx } from "./cx";
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { cx as cn } from "./cx";
 import {
   gateById,

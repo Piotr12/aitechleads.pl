@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { ROLES } from "../_data/roles";
 import { cellsForRole } from "../_data/raci";
 import { Legend, PageIntro, RoleAvatar } from "../_components/bits";

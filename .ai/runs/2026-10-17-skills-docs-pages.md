@@ -3,7 +3,7 @@
 **Date:** 2026-10-17
 **Agent:** Claude Code (Opus 5.5) via cezar, orchestrating three subagents
 **Spec:** none (request given directly in the cezar task)
-**Status:** done (pushed to the task branch; not merged to `main`, so not deployed)
+**Status:** done (deployed to production)
 
 ## Goal
 
@@ -45,6 +45,14 @@ No links from the rest of the site; pages are `noindex`.
 - While restarting the test server, `pkill -f next-server` also stopped any other local `next-server`. Later
   restarts kill only the process on port 3456.
 
+- Human chose to merge: `main` fast-forwarded to 5a85029 and deployed (Deploy run 39072569409 green);
+  `https://aitechleads.pl/docs1`, `/docs2` and `/docs3` return 200 with `noindex, nofollow`.
+- 2026-10-18: of the two rate-limit fixes (raise the limit to 300, or stop prefetching on the docs), the human chose
+  to stop prefetching. Each variant now has `_components/link.tsx` (`next/link` with `prefetch={false}`), used by
+  all 33 importers. Measured with Chrome via the DevTools protocol (fresh profile, full scroll): every docs page
+  view now costs 7 proxied requests, 6 of them the site header's own prefetches (`/`, `/projects/new`,
+  `/login`), and a click costs 1. Before, `/docs1/skills` cost 26 or more.
+
 ## Changes
 
 - `packages/ui/src/components/{accordion,breadcrumb,tabs,tooltip}.tsx` (shadcn, generated).
@@ -77,7 +85,6 @@ No links from the rest of the site; pages are `noindex`.
 
 ## Follow-ups
 
-- **Rate limit versus link-heavy pages.** A page view costs 6–26 proxied requests because of `<Link>`
-  prefetches (most on `/docs1/skills`). Clicking quickly through the docs could hit the 120/min per-IP limit.
-  Options: `prefetch={false}` on dense link lists, or a higher page limit. That is the human's call.
+- The site header's three links still prefetch, costing 6 requests on every page of the site. Fine at 120/min,
+  but worth remembering if the limit is ever lowered.
 - Pick one variant (or merge the best parts) and delete the others, then decide on linking and indexing.

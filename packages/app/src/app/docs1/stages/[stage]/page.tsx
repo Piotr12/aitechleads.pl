@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { StageRail } from "../../_components/diagrams";

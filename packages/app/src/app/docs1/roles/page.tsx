@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { RoleLane } from "../_components/diagrams";
 import { Legend } from "../_components/legend";
 import { GateTag, LayerTag } from "../_components/marks";

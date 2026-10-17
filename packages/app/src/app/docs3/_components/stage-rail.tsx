@@ -1,5 +1,5 @@
 /** The ten stages as a picture: a rail on desktop, a vertical line on phones. */
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { STAGES, type StageId } from "../_data/stages";
 import { cn } from "./cx";
 

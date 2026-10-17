@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { cn } from "@atl/ui/lib/utils";
 import { Legend } from "../_components/legend";
 import { DutyLine, GateTag, SkillChip } from "../_components/marks";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { STAGES } from "../_data/stages";
 import { EXAMPLE, STORY_BY_STAGE } from "../_data/story";
 import { IllustrativeBadge, PageIntro } from "../_components/bits";

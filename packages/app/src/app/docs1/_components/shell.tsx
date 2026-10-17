@@ -1,5 +1,5 @@
 import { Fragment, type ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Breadcrumb,

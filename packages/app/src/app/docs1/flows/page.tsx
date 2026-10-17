@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { FlowArrow, FlowBranches, FlowColumn, FlowLegend, FlowStep } from "../_components/flow";
 import { DocsShell, ExternalLink, PageHeader, Pager, Section } from "../_components/shell";
 import { href, upstream } from "../_data";

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { DocsNav, DocsNavList } from "./_components/docs-nav";
 
 export const metadata: Metadata = {

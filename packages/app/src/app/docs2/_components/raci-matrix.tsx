@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@atl/ui/components/table";
 import { ROLES, STAGES, gatesAt } from "../_data/model";
 import { cx } from "./cx";

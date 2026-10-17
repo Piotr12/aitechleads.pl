@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { HANDOFFS, ROLES, ROBOTS, SKILLS, STAGE_IDS, UPSTREAM, roleSkills, type Role } from "./_data/model";
 import { DocsNav, Pager, SectionTitle } from "./_components/chrome";
 import { Dot, GateTag, Legend } from "./_components/marks";

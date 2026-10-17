@@ -1,5 +1,5 @@
 /** Small presentational pieces shared by every docs3 page. */
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import type { ReactNode } from "react";
 import { cn } from "./cx";
 import { ROLE_BY_ID, type RoleId } from "../_data/roles";

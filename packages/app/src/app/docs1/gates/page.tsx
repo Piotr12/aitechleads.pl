@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@atl/ui/components/table";
 import { StageRail } from "../_components/diagrams";
 import { FlowArrow, FlowBranches, FlowColumn, FlowStep } from "../_components/flow";

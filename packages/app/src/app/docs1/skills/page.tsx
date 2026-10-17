@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@atl/ui/components/tabs";
 import { GateTag } from "../_components/marks";
 import { DocsShell, ExternalLink, PageHeader, Pager, Section } from "../_components/shell";

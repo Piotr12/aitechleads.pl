@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { notFound } from "next/navigation";
 import {
   GATES,

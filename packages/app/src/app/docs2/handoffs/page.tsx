@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs2/_components/link";
 import { HANDOFFS, ROBOTS, ROLES, STAGES, type Handoff, type RoleId } from "../_data/model";
 import { DocsNav, Pager } from "../_components/chrome";
 import { GateTag } from "../_components/marks";

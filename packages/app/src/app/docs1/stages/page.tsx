@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { StageRail } from "../_components/diagrams";
 import { GateTag, LayerTag, SkillChip } from "../_components/marks";
 import { DocsShell, PageHeader, Section } from "../_components/shell";

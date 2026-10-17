@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { Badge } from "@atl/ui/components/badge";
 import { getSkill, href, type SkillId } from "../_data";
 

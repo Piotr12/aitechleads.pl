@@ -1,5 +1,5 @@
 /** Views of the RACI chart: one role's lane, one stage's cast, and the full matrix. */
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { cellAt, cellsForStage, type RaciCell } from "../_data/raci";
 import { ROLE_BY_ID, ROLES, type RoleId } from "../_data/roles";
 import { STAGES, type StageId } from "../_data/stages";

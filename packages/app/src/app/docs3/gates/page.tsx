@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { GATES } from "../_data/gates";
 import { STAGE_BY_ID, STAGES } from "../_data/stages";
 import { REPO_LINKS } from "../_data/skills";

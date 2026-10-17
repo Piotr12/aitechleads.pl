@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { cn } from "@atl/ui/lib/utils";
 import { getGate, href, type Duty, type GateId, type Mode, type Raci, type SkillId } from "../_data";
 

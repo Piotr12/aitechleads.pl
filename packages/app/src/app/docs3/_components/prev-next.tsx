@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type Target = { href: string; label: string; hint?: string };

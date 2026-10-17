@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/app/docs1/_components/link";
 import { cn } from "@atl/ui/lib/utils";
 import { href, type GateId, type SkillId } from "../_data";
 import { GateTag } from "./marks";

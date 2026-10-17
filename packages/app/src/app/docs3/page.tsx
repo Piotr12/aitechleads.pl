@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/docs3/_components/link";
 import { Button } from "@atl/ui/components/button";
 import { ROLES } from "./_data/roles";
 import { EXAMPLE } from "./_data/story";
