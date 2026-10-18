@@ -27,10 +27,55 @@ function cell(moments: Moment[]) {
   return { names, decides };
 }
 
+/** Phones: the same table, stacked stop by stop. */
+function Stacked() {
+  return (
+    <ol className="flex flex-col gap-2 sm:hidden">
+      {COLS.map((c) => {
+        const people = ROLES.map((r) => ({ r, ms: r.moments.filter((m) => c.where.includes(m.where)) })).filter((x) => x.ms.length > 0);
+        return (
+          <li key={c.name} className="flex min-w-0 flex-col gap-1.5 rounded-xl border bg-card p-3">
+            <Link href={c.href} className="text-sm font-semibold hover:underline">
+              {c.name}
+            </Link>
+            {people.length === 0 ? (
+              <p className="text-xs text-muted-foreground">Agents only.</p>
+            ) : (
+              <ul className="flex flex-col gap-1">
+                {people.map(({ r, ms }) => {
+                  const { names, decides } = cell(ms);
+                  return (
+                    <li key={r.id} className={cn("flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 rounded-md border px-2 py-1 text-xs", decides ? DECIDE : PERSON)}>
+                      <span className="font-medium">
+                        {r.emoji} {r.name}
+                      </span>
+                      {decides && <Hand className="size-3" aria-label="decides here" />}
+                      <span className="font-mono text-[11px] [overflow-wrap:anywhere]">{names.join(" · ")}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 /** Who touches the work where: people down the side, the road along the top. */
 export function Swimlane({ highlight }: { highlight?: RoleId }) {
   return (
-    <div className="overflow-x-auto rounded-xl border bg-card">
+    <>
+      <Stacked />
+      <Table highlight={highlight} />
+    </>
+  );
+}
+
+function Table({ highlight }: { highlight?: RoleId }) {
+  return (
+    <div className="hidden overflow-x-auto rounded-xl border bg-card sm:block">
       <table className="w-full min-w-[960px] table-fixed border-collapse text-xs">
         <thead>
           <tr className="bg-muted/50">

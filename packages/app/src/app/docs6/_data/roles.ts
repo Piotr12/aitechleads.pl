@@ -76,7 +76,7 @@ export const ROLES: Role[] = [
       "Synthetic personas never count as evidence; `om-backlog` refuses a brief whose problem rests only on assumptions.",
     ],
     monday: [
-      "Read `SDLC.md` in your repo: the Definition of Ready section is the contract you now own.",
+      "In `SDLC.md`, reread the Definition of Ready: it is the contract you now own.",
       "Run `/om-auto-manage-issues --dry-run` to see what your open issues lack, without changing anything.",
       "Pick one fuzzy idea and run `/om-brainstorm` on it.",
     ],
@@ -135,7 +135,7 @@ export const ROLES: Role[] = [
     id: "developer",
     name: "Developer",
     emoji: "👩‍💻",
-    tagline: "You hand the parcel to the agents and get back a reviewed, labelled PR.",
+    tagline: "You hand the work to the agents, and you own the PR they open until it is ready to merge.",
     source: "docs/roles/developer.md",
     moments: [
       {
@@ -154,9 +154,10 @@ export const ROLES: Role[] = [
         does: "Ship a free-form task, build an existing spec, resume an interrupted run, or (on a branch you worked by hand) run the gate, fix drift, commit and push.",
       },
       {
-        where: "stalled",
-        run: ["/om-pr-autopilot 421 --dry-run"],
-        does: "See what is left on a PR before you drive it to the end.",
+        where: "review",
+        run: ["/om-auto-fix-pr 421", "/om-auto-continue-pr 421", "/om-pr-autopilot 421 --dry-run"],
+        does: "Your PR came back `changes-requested`. As its author you own it until it is merge-ready: let `om-auto-fix-pr` fix the findings, merge the base and get CI green; or resume an unfinished plan with `om-auto-continue-pr`; or fix it by hand and push. Not sure what is left? Ask the autopilot with `--dry-run`.",
+        decide: "How each finding gets handled: fixed (by you or an agent), filed as a follow-up, or declined with a reason on the PR. Then it goes back to `review`.",
       },
     ],
     never: [
@@ -164,8 +165,7 @@ export const ROLES: Role[] = [
       "Add `Closes #123` yourself only when you open a PR by hand; the skills manage `Refs` and `Closes` for you.",
     ],
     monday: [
-      "Run `/om-auto-create-pr` on a small, low-risk chore and watch the draft PR fill in: plan commit, progress ticks, labels, review.",
-      "Read the plan file it committed under `.ai/runs/`.",
+      "After the first chore run, read the plan file it committed under `.ai/runs/`.",
       "Then try `/om-auto-fix-issue` on a real, small bug.",
     ],
   },
@@ -258,8 +258,7 @@ export const ROLES: Role[] = [
       "A repo-local skill override can add rules but cannot relax the installed safety rules (no skipping tests, no `--no-verify`, no force-push).",
     ],
     monday: [
-      "Install and configure: `npx skills add open-mercato/skills --skill '*'`, then `/om-setup-agent-pipeline` and review what it detected.",
-      "Read the generated `SDLC.md` with the team; it is the document humans follow.",
+      "Check branch protection: `SDLC.md` relies on it, with the QA gate, to hold every merge until required checks are green.",
       "Run `/om-merge-buddy` to see your open PRs through the gates.",
     ],
   },

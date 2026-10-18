@@ -78,18 +78,20 @@ export default function MondayPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <H2>Your own first Monday</H2>
+        <H2>Then, by role</H2>
         <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {ROLES.map((r) => (
-            <li key={r.id}>
-              <Link href={`/docs6/people/${r.id}`} className="flex h-full min-w-0 flex-col gap-1 rounded-xl border bg-card p-3 text-sm transition-colors hover:bg-muted/50">
-                <span className="font-semibold">
-                  <span aria-hidden>{r.emoji}</span> {r.name}
-                </span>
-                <span className="text-muted-foreground">
-                  <Md text={r.monday[0]} />
-                </span>
+            <li key={r.id} className="flex h-full min-w-0 flex-col gap-2 rounded-xl border bg-card p-3 text-sm">
+              <Link href={`/docs6/people/${r.id}`} className="font-semibold hover:underline">
+                <span aria-hidden>{r.emoji}</span> {r.name}
               </Link>
+              <ol className="flex list-decimal flex-col gap-1 pl-4 text-muted-foreground">
+                {r.monday.map((m) => (
+                  <li key={m}>
+                    <Md text={m} />
+                  </li>
+                ))}
+              </ol>
             </li>
           ))}
         </ul>

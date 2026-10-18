@@ -5,17 +5,17 @@ import { Md } from "./_components/md";
 import { Trip } from "./_components/trip";
 import { meta, PARTS } from "./_data/nav";
 
-export const metadata = meta(
-  "Follow the parcel",
-  "How the open-mercato AI SDLC skills pass one piece of work from hand to hand, from idea to merged and tidied.",
-);
+export const metadata = {
+  ...meta("Follow the work", "How the open-mercato AI SDLC skills pass one piece of work from hand to hand, from idea to merged and tidied."),
+  title: { absolute: "Follow the work" },
+};
 
 export default function Docs6Home() {
   return (
     <Frame
       href="/docs6"
-      kicker="📦 A guide to the open-mercato skills, told by following the work"
-      title="Follow the parcel"
+      kicker="📦 A guide to the open-mercato skills"
+      title="Follow the work"
       idea="These skills carry one piece of work from an idea to a merged, tidied change. Agents do the carrying; people decide at a few named points."
       lead={
         <p>

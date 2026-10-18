@@ -146,8 +146,8 @@ Brief: ${BRIEF}`,
     ],
     notes: [
       {
-        title: "Never on an issue",
-        text: "Pipeline labels (`review`, `merge-queue`, …) and `in-progress`. Those belong to PRs and to work that is actually running.",
+        title: "What filing never sets",
+        text: "`om-prepare-issue` never puts a pipeline label (`review`, `merge-queue`, …: those are PR-only) or `in-progress` on the issue it files: nobody is working on it yet. A skill that later works the issue claims it with `in-progress` (stop 3 does).",
       },
       {
         title: "Many issues, or messy ones",
@@ -190,7 +190,7 @@ Pick up with: om-auto-fix-issue 412
     emoji: "📐",
     holder: "agent",
     idea: "For a feature, the design travels ahead of the code on its own PR, and every guess the agent made is posted for a person to correct.",
-    lead: "The product person wants to sign off on the approach before any code exists, so they run `om-auto-write-spec` on the issue. It writes the spec unattended and opens a PR that holds only the design.",
+    lead: "“Not now” was a decision about timing, not about the idea. Weeks later the team schedules issue #412. Before any code exists, the product person wants to sign off on the approach, so they run `om-auto-write-spec` on the issue. It writes the spec unattended and opens a PR that holds only the design.",
     run: { who: "Product person (or designer, or developer)", cmd: "/om-auto-write-spec 412" },
     inside: ["om-spec-writing", "om-open-pr", "om-prepare-test-env"],
     reads: [
@@ -219,12 +219,16 @@ Pick up with: om-auto-fix-issue 412
     ],
     notes: [
       {
+        title: "Design first (optional)",
+        text: "For a change people will see, a designer may settle the flow and its states (empty, loading, error, no permission) before the spec is written, with `/om-ux-shape \"bulk-archive from the orders grid\"`. A change with no UI skips this.",
+      },
+      {
         title: "Two speeds",
         text: "**Spec first** (this page): `om-auto-write-spec` stops once the spec PR is up, and the build waits for a later run. **Full auto**: `om-auto-fix-issue 412` on an issue with no spec writes the spec and goes straight on to build it, in one run.",
       },
       {
-        title: "The spec gets reviewed too",
-        text: "`/om-auto-review-pr 418` on a spec-only PR runs a specification review instead of the code checklist: what can go wrong, backward compatibility, what is missing, how to improve it, and whether it is the simplest solution. Its fixes edit the spec, never add code.",
+        title: "The spec PR's own trip",
+        text: "Review it like code (`/om-auto-review-pr 418` runs the specification review; its fixes edit only the spec), then the maintainer merges it at stop 8; `skip-qa` means no QA gate. The build at stop 5 does not wait for that merge: it reads the spec from #418's branch.",
       },
     ],
     specimen: {
@@ -387,8 +391,8 @@ in one action, instead of one at a time.
         text: "A red check never short-circuits the review, and the review never waits for CI. The author gets the failing check, the conflict and every code finding in one pass.",
       },
       {
-        title: "merge-queue is not proof of QA",
-        text: "A `needs-qa` PR sits in `merge-queue` legitimately until QA signs off. The label says where it is, not that it may merge.",
+        title: "A design pass (advisory)",
+        text: "Because #421 changes a screen, a designer can run `/om-ux-review-pr 421`: it walks the changed screens in a real browser and posts findings ranked by user impact. It informs the review; it sets no labels and never holds the merge.",
       },
     ],
     specimen: {
@@ -485,6 +489,7 @@ QA head: 3f9c2e1`,
     leavesBehind: [
       "an approving review, then a squash-merge into the base branch",
       "issue #412 closed by the `Closes #412` line in the PR body",
+      "the spec PR #418 is merged the same way, by the same person, once its review approved it; its `Refs #412` leaves the issue for #421 to close",
       "optionally a follow-up issue, filed after the merge so it can point at merged work",
     ],
     labels: [],
@@ -499,12 +504,7 @@ QA head: 3f9c2e1`,
       "Red CI: it offers `om-auto-fix-pr 421 --ci-only`. Conflicts or several problems: it offers `om-auto-fix-pr 421`, which hands the PR back here when it is ready.",
       "Hard-block labels and the QA gate are never routed to automation. They need people.",
     ],
-    notes: [
-      {
-        title: "Who never merges",
-        text: "`om-auto-fix-pr` drives a PR to merge-ready and stops. `om-pr-autopilot` stops at merge-ready unless you pass `--allow-merge`. `om-merge-buddy` only reports.",
-      },
-    ],
+    notes: [],
     specimen: {
       kind: "om-merge-buddy report",
       title: "shortened",

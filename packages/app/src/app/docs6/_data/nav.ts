@@ -21,7 +21,7 @@ export const PARTS: Part[] = [
 export type NavPage = { href: string; title: string; part: PartId };
 
 export const SEQUENCE: NavPage[] = [
-  { href: "/docs6", title: "Follow the parcel", part: "start" },
+  { href: "/docs6", title: "Follow the work", part: "start" },
   { href: "/docs6/kit", title: "Five kinds of moving parts", part: "kit" },
   { href: "/docs6/kit/handoff", title: "How to read a hand-off", part: "kit" },
   ...STATIONS.map((s) => ({ href: `/docs6/journey/${s.id}`, title: `${s.n}. ${s.title}`, part: "journey" as const })),

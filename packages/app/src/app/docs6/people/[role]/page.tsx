@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Ban, CalendarCheck, Hand } from "lucide-react";
+import { Ban, Hand } from "lucide-react";
 import Link from "../../_components/link";
 import { Frame } from "../../_components/frame";
 import { cn } from "../../_components/cx";
-import { Cmd, DECIDE, H2, PERSON, Source } from "../../_components/marks";
+import { Cmd, DECIDE, H2, InternalLink, PERSON, Source } from "../../_components/marks";
 import { Md } from "../../_components/md";
-import { Swimlane } from "../../_components/swimlane";
 import { meta } from "../../_data/nav";
 import { isRoleId, ROLE_BY_ID, ROLES, type Where } from "../../_data/roles";
 import { STATION_BY_ID, STATIONS, isStationId } from "../../_data/stations";
@@ -85,7 +84,7 @@ export default async function RolePage({ params }: PageProps<"/docs6/people/[rol
         </>
       }
       idea={r.tagline}
-      lead={<p>Your moments on the road, in the order the work reaches you. Everything between them is carried by agents, or by the other people in the table below.</p>}
+      lead={<p>Your moments on the road, in the order the work reaches you. Everything between them is carried by agents or by the other people.</p>}
     >
       <section className="flex flex-col gap-2 rounded-xl border bg-card p-3 sm:p-4">
         <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Your stops on the road</p>
@@ -106,11 +105,7 @@ export default async function RolePage({ params }: PageProps<"/docs6/people/[rol
                   <span aria-hidden>{w.emoji}</span>
                   {w.name}
                 </Link>
-                <div className="flex flex-col gap-2">
-                  {m.run.map((c) => (
-                    <Cmd key={c}>{c}</Cmd>
-                  ))}
-                </div>
+                <Cmd>{m.run.join("\n")}</Cmd>
                 <p className="text-sm leading-relaxed">
                   <Md text={m.does} />
                 </p>
@@ -129,37 +124,23 @@ export default async function RolePage({ params }: PageProps<"/docs6/people/[rol
         </ol>
       </section>
 
-      <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <div className="flex min-w-0 flex-col gap-2 rounded-xl border bg-muted/30 p-4">
-          <p className="flex items-center gap-2 font-semibold">
-            <Ban className="size-4" aria-hidden /> Good to know
-          </p>
-          <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
-            {r.never.map((n) => (
-              <li key={n}>
-                <Md text={n} />
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex min-w-0 flex-col gap-2 rounded-xl border-2 border-foreground/70 bg-card p-4">
-          <p className="flex items-center gap-2 font-semibold">
-            <CalendarCheck className="size-4" aria-hidden /> Your first Monday
-          </p>
-          <ol className="flex list-decimal flex-col gap-1.5 pl-4 text-sm">
-            {r.monday.map((n) => (
-              <li key={n}>
-                <Md text={n} />
-              </li>
-            ))}
-          </ol>
-        </div>
+      <section className="flex min-w-0 flex-col gap-2 rounded-xl border bg-muted/30 p-4">
+        <p className="flex items-center gap-2 font-semibold">
+          <Ban className="size-4" aria-hidden /> Good to know
+        </p>
+        <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
+          {r.never.map((n) => (
+            <li key={n}>
+              <Md text={n} />
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <section className="flex flex-col gap-2">
-        <H2>You, among the others</H2>
-        <Swimlane highlight={r.id} />
-      </section>
+      <p className="text-sm">
+        Everyone side by side: <InternalLink href="/docs6/people">Six people along the road</InternalLink>. What to do
+        first: <InternalLink href="/docs6/monday">Your first week</InternalLink>.
+      </p>
 
       <p className="text-xs text-muted-foreground">
         Checked against: <Source path={r.source} /> <Source path="README.md">README, “Workflows by role”</Source>

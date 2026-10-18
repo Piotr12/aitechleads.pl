@@ -16,9 +16,8 @@ export default function PeoplePage() {
       idea="Each person meets the work at only a few stops; between those, agents carry it. Knowing your stops is most of knowing your job."
       lead={
         <p>
-          Read across a row to see one person’s whole flow; read down a column to see who is involved at one stop. A
-          cell lists what that person runs there; a rose cell with a hand is where they make a call nobody else may
-          make. One person can wear several hats.
+          For every stop: who acts there and what they run. Rose with a hand marks a call that person makes and nobody
+          else may. One person can wear several hats.
         </p>
       }
     >
@@ -29,7 +28,6 @@ export default function PeoplePage() {
           <span className={cn("rounded-md border px-2 py-0.5", DECIDE)}>✋ and decides here</span>
         </div>
         <Swimlane />
-        <p className="text-xs text-muted-foreground sm:hidden">The table scrolls sideways.</p>
       </section>
 
       <section className="flex flex-col gap-3">

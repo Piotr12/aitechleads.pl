@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowRight, Bot, MessagesSquare } from "lucide-react";
 import { Frame } from "../../_components/frame";
 import { cn } from "../../_components/cx";
-import { AGENT, Callout, DECIDE, H2, InternalLink, PERSON, Source } from "../../_components/marks";
+import { AGENT, Callout, DECIDE, H2, InternalLink, LabelKey, PERSON, Source } from "../../_components/marks";
 import { Md } from "../../_components/md";
 import { meta } from "../../_data/nav";
 
@@ -17,10 +17,10 @@ const BEATS = [
 
 const SLIP = [
   ["1 · Started by", "who starts this hand-off, and the exact command (or which skill calls it). Skills listed as “runs inside” are called for you."],
-  ["2 · Labels it carries now", "the label set on the issue or PR after this stop: dark chips are pipeline state, dashed ones are signals."],
-  ["3 · Reads", "what the skill looks at before acting: files, the tracker, the rulebook."],
-  ["4 · Leaves behind", "everything it changes or creates: the trail the next holder finds."],
-  ["5 · Says “your turn” with", "the exact lines it ends on, which a person can read and the next skill can parse."],
+  ["2 · Labels it carries now", "the label set on the issue or PR after this stop (key below)."],
+  ["3 · Leaves behind", "everything it changes or creates: the trail the next holder finds."],
+  ["4 · Says “your turn” with", "the exact lines it ends on, which a person can read and the next skill can parse."],
+  ["5 · What it reads first", "folded away: the files, tracker items and rules the skill looks at before acting."],
   ["6 · A person decides", "the call no agent may make at this stop, and who makes it. Or, in grey, why nobody needs to."],
 ];
 
@@ -137,6 +137,7 @@ Pick it up later with om-auto-fix-issue 412.
             </div>
           ))}
         </dl>
+        <LabelKey />
       </section>
 
       <Callout title="Three promises that make chaining safe">

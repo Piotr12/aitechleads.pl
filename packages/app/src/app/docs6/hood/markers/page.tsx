@@ -45,7 +45,7 @@ const BATON: { skill: string; line: string }[] = [
 
 const BODY: { line: string; meaning: string }[] = [
   { line: "Closes #412", meaning: "on an implementing PR: merging closes the issue. Housekeeping acts on these authoritative links only, never on a bare `#412`" },
-  { line: "Refs #418", meaning: "on a spec PR, and on the implementation PR pointing back at its spec PR: linked, but never closed by the merge" },
+  { line: "Refs #412 · Refs #418", meaning: "a spec PR refs its issue (#412); the implementation PR refs its spec PR (#418). Linked, but never closed by the merge" },
   { line: "Tracking plan: .ai/runs/…", meaning: "where the execution plan is: what `om-auto-continue-pr` reads to resume" },
   { line: "Status: in-progress | complete", meaning: "whether the plan is finished; an interrupted run leaves the PR a draft with this line still saying in-progress (not to be confused with the label)" },
   { line: "Source doc: .ai/specs/…", meaning: "the spec this PR implements; how a second run finds the existing implementation PR instead of opening another" },

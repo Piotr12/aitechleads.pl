@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { BookOpen, Bot, Hand, Megaphone, Package, Tag, User } from "lucide-react";
+import { BookOpen, Bot, ChevronDown, Hand, Megaphone, Package, Tag, User } from "lucide-react";
 import { cn } from "./cx";
 import { Md } from "./md";
 import { AGENT, Cmd, DECIDE, LabelRow, PERSON, SkillChip } from "./marks";
@@ -76,17 +76,11 @@ export function Slip({ s }: { s: Station }) {
         </Row>
       </div>
 
-      <div className="grid grid-cols-1 divide-y border-t md:grid-cols-2 md:divide-x md:divide-y-0">
-        <Row icon={<BookOpen className="size-3.5" aria-hidden />} title="3 · Reads">
-          <List items={s.reads} />
-        </Row>
-        <Row icon={<Package className="size-3.5" aria-hidden />} title="4 · Leaves behind">
+      <div className="grid grid-cols-1 divide-y border-t md:grid-cols-[1.4fr_1fr] md:divide-x md:divide-y-0">
+        <Row icon={<Package className="size-3.5" aria-hidden />} title="3 · Leaves behind">
           <List items={s.leavesBehind} />
         </Row>
-      </div>
-
-      <div className="border-t">
-        <Row icon={<Megaphone className="size-3.5" aria-hidden />} title="5 · Says “your turn” with">
+        <Row icon={<Megaphone className="size-3.5" aria-hidden />} title="4 · Says “your turn” with">
           {s.markers.length > 0 ? (
             <pre className="overflow-x-auto rounded-lg border bg-muted/50 px-3 py-2 font-mono text-[12.5px] leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]">
               {s.markers.join("\n")}
@@ -100,6 +94,17 @@ export function Slip({ s }: { s: Station }) {
           )}
         </Row>
       </div>
+
+      <details className="group border-t">
+        <summary className="flex cursor-pointer list-none items-center gap-1.5 px-4 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase hover:text-foreground [&::-webkit-details-marker]:hidden">
+          <BookOpen className="size-3.5" aria-hidden />
+          5 · What it reads first ({s.reads.length})
+          <ChevronDown className="size-3.5 transition-transform group-open:rotate-180" aria-hidden />
+        </summary>
+        <div className="px-4 pb-4 text-sm leading-relaxed">
+          <List items={s.reads} />
+        </div>
+      </details>
 
       <div className={cn("border-t-2 border-foreground/70", s.decide ? DECIDE : "bg-muted/30")}>
         <Row icon={<Hand className="size-3.5" aria-hidden />} title={s.decide ? `6 · A person decides: ${s.decide.who}` : "6 · Nobody decides here"}>

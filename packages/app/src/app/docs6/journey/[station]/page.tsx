@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CircleStop } from "lucide-react";
 import { StationExtra } from "../../_components/extras";
 import { Frame } from "../../_components/frame";
-import { Callout, H2, LabelKey, Source, Specimen } from "../../_components/marks";
+import { Callout, H2, Source, Specimen } from "../../_components/marks";
 import { Md } from "../../_components/md";
 import { Slip } from "../../_components/slip";
 import { Tracker } from "../../_components/trip";
@@ -47,10 +47,7 @@ export default async function StationPage({ params }: PageProps<"/docs6/journey/
 
       {extraFirst && <StationExtra id={s.id} />}
 
-      <div className="flex flex-col gap-2">
-        <Slip s={s} />
-        <LabelKey />
-      </div>
+      <Slip s={s} />
 
       {!extraFirst && <StationExtra id={s.id} />}
 

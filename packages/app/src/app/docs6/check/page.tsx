@@ -14,7 +14,7 @@ const BIG: QA[] = [
     q: "What does this system do, in one sentence?",
     a: "It carries one piece of work from an idea to a merged, tidied change through a chain of agent skills, with people deciding at a few named points.",
     href: "/docs6",
-    where: "Follow the parcel",
+    where: "Follow the work",
   },
   {
     q: "What are its moving parts?",

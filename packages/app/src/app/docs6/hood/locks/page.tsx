@@ -67,7 +67,9 @@ export default function LocksPage() {
           ))}
         </ul>
         <p className="text-xs text-muted-foreground">
-          Exact templates, with illustrative names and times filled in. A run that fails after claiming still releases
+          Claim, hand-off and take-over follow the templates in <code className="font-mono">claim-pr.md</code>, with
+          illustrative names and times. For the release, <code className="font-mono">claim-pr.md</code> only asks for a
+          short outcome comment; this wording is the one <code className="font-mono">om-auto-review-pr</code> uses. A run that fails after claiming still releases
           the lock from a finally-block, with a comment saying why (for <code className="font-mono">om-auto-fix-issue</code>:
           “aborted: … Lock released.”), so even a crash leaves no orphaned claim.
         </p>

@@ -46,10 +46,10 @@ function Node({ x, y, w = 150, label, pipeline = true }: { x: number; y: number;
   );
 }
 
-function Edge({ d, who, label, lx, ly, anchor = "middle" }: { d: string; who: Who; label: string; lx: number; ly: number; anchor?: "start" | "middle" | "end" }) {
+function Edge({ d, who, label, lx, ly, anchor = "middle", id = "w" }: { d: string; who: Who; label: string; lx: number; ly: number; anchor?: "start" | "middle" | "end"; id?: string }) {
   return (
     <g>
-      <path d={d} fill="none" strokeWidth={2} className={EDGE[who]} markerEnd={`url(#arrow-${who})`} />
+      <path d={d} fill="none" strokeWidth={2} className={EDGE[who]} markerEnd={`url(#${id}-arrow-${who})`} />
       <text x={lx} y={ly} textAnchor={anchor} className="fill-foreground text-[11px]">
         {label}
       </text>
@@ -57,17 +57,60 @@ function Edge({ d, who, label, lx, ly, anchor = "middle" }: { d: string; who: Wh
   );
 }
 
+function Arrows({ id }: { id: string }) {
+  return (
+    <defs>
+      {(["agent", "person", "either"] as Who[]).map((w) => (
+        <marker key={w} id={`${id}-arrow-${w}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" className={FILL[w]} />
+        </marker>
+      ))}
+    </defs>
+  );
+}
+
+/** Phones: the same machine, drawn top to bottom. */
+function MachineTall() {
+  const e = "t";
+  return (
+    <svg viewBox="0 0 360 490" role="img" aria-labelledby="sm-title-tall" className="h-auto w-full">
+      <title id="sm-title-tall">Pipeline label transitions on a pull request</title>
+      <Arrows id={e} />
+      <Node x={30} y={10} label="PR opened" pipeline={false} />
+      <Node x={30} y={110} label="review" />
+      <Node x={200} y={110} w={150} label="changes-requested" />
+      <Node x={30} y={220} label="merge-queue" />
+      <Node x={200} y={220} w={150} label="merged" pipeline={false} />
+      <Node x={30} y={350} label="qa" />
+      <Node x={200} y={350} w={150} label="qa-failed" />
+
+      <Edge id={e} d="M105 54 L105 106" who="agent" label="ready" lx={113} ly={84} anchor="start" />
+      <Edge id={e} d="M180 122 L196 122" who="either" label="" lx={0} ly={0} />
+      <text x={275} y={102} textAnchor="middle" className="fill-foreground text-[11px]">↑ request changes</text>
+      <Edge id={e} d="M200 144 L184 144" who="either" label="" lx={0} ly={0} />
+      <text x={275} y={170} textAnchor="middle" className="fill-foreground text-[11px]">↓ fixed: back to review</text>
+      <Edge id={e} d="M105 154 L105 216" who="either" label="approve" lx={113} ly={190} anchor="start" />
+      <Edge id={e} d="M180 242 L196 242" who="person" label="" lx={0} ly={0} />
+      <text x={275} y={212} textAnchor="middle" className="fill-foreground text-[11px]">→ merge, all gates</text>
+      <Edge id={e} d="M70 264 L70 346" who="person" label="" lx={0} ly={0} />
+      <Edge id={e} d="M140 350 L140 268" who="person" label="" lx={0} ly={0} />
+      <text x={150} y={296} className="fill-foreground text-[11px]">↓ tester starts (needs-qa only)</text>
+      <text x={150} y={316} className="fill-foreground text-[11px]">↑ pass: + qa-approved</text>
+      <Edge id={e} d="M180 372 L196 372" who="person" label="" lx={0} ly={0} />
+      <text x={275} y={410} textAnchor="middle" className="fill-foreground text-[11px]">fail: back to the author</text>
+
+      <rect x={10} y={428} width={340} height={56} rx={8} className="fill-rose-50 stroke-rose-400 dark:fill-rose-950" strokeWidth={1.5} />
+      <text x={22} y={450} className="fill-foreground font-mono text-[13px]">blocked · do-not-merge</text>
+      <text x={22} y={471} className="fill-foreground text-[11px]">set by people; stop the flow wherever it is</text>
+    </svg>
+  );
+}
+
 function Machine() {
   return (
     <svg viewBox="0 0 770 390" role="img" aria-labelledby="sm-title" className="h-auto w-full min-w-[700px]">
       <title id="sm-title">Pipeline label transitions on a pull request</title>
-      <defs>
-        {(["agent", "person", "either"] as Who[]).map((w) => (
-          <marker key={w} id={`arrow-${w}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" className={FILL[w]} />
-          </marker>
-        ))}
-      </defs>
+      <Arrows id="w" />
 
       <Node x={10} y={170} w={130} label="PR opened" pipeline={false} />
       <Node x={200} y={170} label="review" />
@@ -139,10 +182,12 @@ export default function LabelsPage() {
           <span className={cn("rounded-full border px-2 py-0.5", PERSON)}>a person only</span>
           <span className="rounded-full border bg-card px-2 py-0.5">person or agent</span>
         </div>
-        <div className="overflow-x-auto rounded-xl border bg-card p-3">
+        <div className="rounded-xl border bg-card p-3 sm:hidden">
+          <MachineTall />
+        </div>
+        <div className="hidden overflow-x-auto rounded-xl border bg-card p-3 sm:block">
           <Machine />
         </div>
-        <p className="text-xs text-muted-foreground sm:hidden">Scroll the diagram sideways, or read the same moves as a list below.</p>
       </section>
 
       <section className="flex flex-col gap-3">
