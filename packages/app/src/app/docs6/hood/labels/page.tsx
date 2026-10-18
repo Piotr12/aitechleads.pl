@@ -101,7 +101,7 @@ function MachineTall() {
 
       <rect x={10} y={428} width={340} height={56} rx={8} className="fill-rose-50 stroke-rose-400 dark:fill-rose-950" strokeWidth={1.5} />
       <text x={22} y={450} className="fill-foreground font-mono text-[13px]">blocked · do-not-merge</text>
-      <text x={22} y={471} className="fill-foreground text-[11px]">set by people; stop the flow wherever it is</text>
+      <text x={22} y={471} className="fill-foreground text-[11px]">people set them; om-auto-fix-pr may also leave blocked</text>
     </svg>
   );
 }
@@ -123,7 +123,7 @@ function Machine() {
       <g>
         <rect x={430} y={30} width={330} height={64} rx={8} className="fill-rose-50 stroke-rose-400 dark:fill-rose-950" strokeWidth={1.5} />
         <text x={445} y={55} className="fill-foreground font-mono text-[13px]">blocked · do-not-merge</text>
-        <text x={445} y={77} className="fill-foreground text-[11px]">set and cleared by people; stop the flow wherever it is</text>
+        <text x={445} y={77} className="fill-foreground text-[11px]">people set them; om-auto-fix-pr may also leave blocked</text>
       </g>
 
       <Edge d="M140 192 L196 192" who="agent" label="ready" lx={168} ly={184} />
