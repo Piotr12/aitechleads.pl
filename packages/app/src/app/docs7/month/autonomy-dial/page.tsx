@@ -62,7 +62,7 @@ export default function AutonomyDial() {
       slug="autonomy-dial"
       know={[
         <>
-          <Cmd>om-auto-*</Cmd> means autonomous: no questions, a claim, an isolated worktree, the validation gate, a
+          Autonomous (every <Cmd>om-auto-*</Cmd> skill, plus <Cmd>om-pr-autopilot</Cmd>) means: no questions, a claim, an isolated worktree, the validation gate, a
           self-review, and a written-down default wherever it had to choose.
         </>,
         <>
@@ -147,7 +147,7 @@ export default function AutonomyDial() {
         <div className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold tracking-tight">What &ldquo;autonomous&rdquo; promises</h2>
           <p className="text-sm text-muted-foreground">
-            Every <Cmd>om-auto-*</Cmd> skill, per the <Ext href={UP.readme}>README</Ext>:
+            Every autonomous skill, per the <Ext href={UP.readme}>README</Ext>:
           </p>
           <ul className="flex flex-col gap-2">
             {AUTO_PROMISES.map((p) => (

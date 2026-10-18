@@ -3,7 +3,6 @@ import { ChapterShell } from "../../_components/chapter";
 import { cn } from "../../_components/cx";
 import {
   Artefact,
-  Callout,
   Cmd,
   DecisionMark,
   Ext,
@@ -47,10 +46,6 @@ export default function Shaping() {
         <>
           The Definition of Ready has two tiers. Only people can supply the ticket-level answers; agents name the gaps
           on the ticket and never fill them in.
-        </>,
-        <>
-          Discovery skills tag synthetic findings <Cmd>[SYNTHETIC]</Cmd>: hypotheses to test with real users, never
-          evidence.
         </>,
       ]}
     >
@@ -195,16 +190,32 @@ The PR remains draft until these assumptions are confirmed.`}
         </p>
       </Story>
 
-      <Callout title="Before the conversation: discovery (optional)">
-        <p>
-          A team starting a product, not a feature, goes one step earlier. <SkillChip name="om-discover" /> writes{" "}
-          <Cmd>product-brief.md</Cmd> from real material, every claim tagged by its evidence and every decision owned by
-          a person. <SkillChip name="om-synthetic-users" /> walks a flow with persona panels (hypotheses only),{" "}
-          <SkillChip name="om-mockup-prototype" /> makes it clickable, and <SkillChip name="om-backlog" /> turns the
-          brief into epics and stories after you approve the tree. The brief&apos;s non-goals, rules and decisions then
-          bind every later review.
+      <aside className="flex flex-col gap-2 rounded-xl border-2 border-dashed p-4 text-sm leading-6">
+        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Side panel · optional · not counted on the map
         </p>
-      </Callout>
+        <p className="font-semibold">Starting a whole product rather than a feature?</p>
+        <p className="text-muted-foreground">
+          Four discovery skills run <em>before</em> any brainstorm. Swallow Express did not need them
+          this month; you can skip this box.
+        </p>
+        <ul className="flex list-disc flex-col gap-1 pl-5">
+          <li>
+            <Cmd>om-discover</Cmd> writes <Cmd>product-brief.md</Cmd> from real material, every claim tagged by its
+            evidence and every decision owned by a person.
+          </li>
+          <li>
+            <Cmd>om-synthetic-users</Cmd> walks a flow with persona panels; findings stay tagged{" "}
+            <Cmd>[SYNTHETIC]</Cmd>, hypotheses and never evidence.
+          </li>
+          <li>
+            <Cmd>om-mockup-prototype</Cmd> makes the flow clickable, low-fi.
+          </li>
+          <li>
+            <Cmd>om-backlog</Cmd> turns the brief into epics and stories, after you approve the tree.
+          </li>
+        </ul>
+      </aside>
     </ChapterShell>
   );
 }

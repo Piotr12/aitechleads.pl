@@ -1,8 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { Frame } from "./_components/frame";
-import { LaneMap } from "./_components/lane-map";
+import { JourneyCompact } from "./_components/journey";
+import { LaneStrip } from "./_components/lane-map";
 import Link from "./_components/link";
-import { Avatar, Cmd, Ext, SectionTitle } from "./_components/marks";
+import { Avatar, Cmd, DecisionMark, Ext, SectionTitle } from "./_components/marks";
 import { meta, UP } from "./_data/links";
 import { SKILLS } from "./_data/skills";
 import { CHAPTERS, chapterHref, PEOPLE } from "./_data/story";
@@ -12,7 +13,7 @@ export const metadata = meta("Before the month");
 const PARTS_OF_THE_MACHINE = [
   {
     name: "Skills",
-    what: "42 instruction files your coding agent (Claude Code, Codex, Cursor…) runs as slash commands. Those named om-auto-… run to the end on their own; the rest act once and talk to you.",
+    what: "42 instruction files your coding agent (Claude Code, Codex, Cursor…) runs as slash commands. Autonomous ones run to the end alone; the rest act once and talk to you.",
     ch: 4,
   },
   {
@@ -57,6 +58,24 @@ export default function Docs7Home() {
           The skills run a team&apos;s whole GitHub workflow, from idea to merged and tidied pull request, with agents
           doing the work and a few labels, locks and gates keeping the decisions that matter with people.
         </p>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <SectionTitle>Where the month is going</SectionTitle>
+        <p className="max-w-prose text-muted-foreground">
+          One feature, from idea to tidied, in nine steps. Each box links to the chapter that tells it; a{" "}
+          <DecisionMark className="inline align-[-2px]" /> marks a step where a person decides.
+        </p>
+        <JourneyCompact />
+        <p className="max-w-prose text-sm text-muted-foreground">
+          The steps pass through eight lanes. Each chapter ends with this strip of lanes, the bars filling as the team
+          meets each lane&apos;s skills; the{" "}
+          <Link href="/docs7/picture" className="underline underline-offset-2">
+            whole picture
+          </Link>{" "}
+          after chapter 11 shows them all.
+        </p>
+        <LaneStrip upTo={0} />
       </section>
 
       <section className="flex flex-col gap-4">
@@ -112,8 +131,8 @@ export default function Docs7Home() {
       <section className="flex flex-col gap-4">
         <SectionTitle>The month, chapter by chapter</SectionTitle>
         <p className="max-w-prose text-muted-foreground">
-          Each chapter carries one idea, shows it in one picture, and ends with <em>What you now know</em> and the map
-          below, a little fuller than before. Read them in order: each one leans on the last.
+          Each chapter carries one idea, shows it in one picture, and ends with <em>What you now know</em> and the
+          lane strip from above, a little fuller than before. Read them in order: each one leans on the last.
         </p>
         <ol className="flex flex-col gap-2">
           {CHAPTERS.map((c) => (
@@ -136,17 +155,6 @@ export default function Docs7Home() {
         </ol>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <LaneMap upTo={0} />
-        <p className="max-w-prose text-sm text-muted-foreground">
-          The map is empty on purpose. It has eight lanes, the places work passes through; the skills and the
-          decisions only people make will appear in them chapter by chapter, until the{" "}
-          <Link href="/docs7/picture" className="underline underline-offset-2">
-            whole picture
-          </Link>{" "}
-          after chapter 11.
-        </p>
-      </section>
 
       <section className="flex flex-col gap-3 rounded-xl border bg-muted/30 p-4">
         <SectionTitle>In a hurry?</SectionTitle>

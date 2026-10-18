@@ -55,7 +55,7 @@ export default async function RolePage({ params }: PageProps<"/docs7/people/[rol
                   <span className="opacity-70 tabular-nums">{i + 1}</span> {l.name}
                 </span>
                 <span className="flex items-center gap-1">
-                  {on ? `${steps.length} moment${steps.length > 1 ? "s" : ""}` : "·"}
+                  {on ? (steps.some((s) => s.decide) ? "you act and decide" : "you act") : "·"}
                   {steps.some((s) => s.decide) && <DecisionMark className="size-3 fill-white text-white" />}
                 </span>
               </li>

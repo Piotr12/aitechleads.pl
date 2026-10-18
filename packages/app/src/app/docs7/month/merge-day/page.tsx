@@ -59,7 +59,7 @@ const BUCKETS: { name: string; tone: string; cards: Card[] }[] = [
         pr: "#33",
         title: "feat: charge per delivery",
         why: <><LabelChip name="blocked" /> (set by Kasia)</>,
-        then: <>a person clears it; no skill will</>,
+        then: <>wait until Kasia clears it; no skill merges past it</>,
       },
       {
         pr: "#35",

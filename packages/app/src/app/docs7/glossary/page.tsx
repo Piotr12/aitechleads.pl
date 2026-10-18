@@ -17,7 +17,7 @@ const FILES: { path: string; by: string; readBy: string; ch: number }[] = [
   { path: "BACKWARD_COMPATIBILITY.md", by: "om-setup-agent-pipeline (if missing)", readBy: "reviews (violations are blockers) and builds", ch: 1 },
   { path: "AGENTS.md", by: "you, or a starter from setup", readBy: "every skill, before working", ch: 1 },
   { path: ".uxproof/", by: "om-ux-setup", readBy: "om-ux-shape, om-ux-review-pr, QA", ch: 1 },
-  { path: ".ai/qa/test-env.json", by: "om-prepare-test-env", readBy: "every browser-driving skill (gitignored)", ch: 1 },
+  { path: ".ai/qa/test-env.json", by: "om-prepare-test-env", readBy: "every browser-driving skill (working state, not source)", ch: 1 },
   { path: ".ai/specs/product-brief.md", by: "om-discover", readBy: "brainstorm, spec writing, issues, backlog, reviews", ch: 5 },
   { path: ".ai/specs/briefs/<date>-<slug>.md", by: "om-brainstorm (one file, after you confirm)", readBy: "the skill its Next: line names", ch: 5 },
   { path: ".ai/specs/<date>-<slug>.md", by: "om-spec-writing / om-auto-write-spec", readBy: "om-auto-implement-spec and the build engines", ch: 5 },
@@ -43,7 +43,7 @@ const CONFIG: { key: string; means: string }[] = [
 
 const TERMS: { term: string; means: React.ReactNode; ch: number }[] = [
   { term: "Skill", means: "A SKILL.md your coding agent runs as a slash command, e.g. /om-auto-fix-issue 15.", ch: 1 },
-  { term: "Autonomous / interactive", means: <>Autonomous (<Cmd>om-auto-*</Cmd>) runs to the end without questions; interactive acts once, may ask, and hands back.</>, ch: 4 },
+  { term: "Autonomous / interactive", means: <>Autonomous runs to the end without questions; interactive acts once, may ask, and hands back. The guide follows each skill&apos;s card: every <Cmd>om-auto-*</Cmd> skill plus <Cmd>om-pr-autopilot</Cmd> is autonomous.</>, ch: 4 },
   { term: "Building block", means: "A small skill mainly meant to be composed by others: verify, root cause, fix, open PR, code review, test env.", ch: 2 },
   { term: "Chain marker", means: <>The last lines of a report, <Cmd>PR: #14 (link: …)</Cmd>, <Cmd>Issue:</Cmd>, <Cmd>Spec:</Cmd>, which the next skill parses.</>, ch: 2 },
   { term: "Claim", means: <>Assignee + <LabelChip name="in-progress" /> + a 🤖 claim comment. Any of them makes other agents back off.</>, ch: 7 },

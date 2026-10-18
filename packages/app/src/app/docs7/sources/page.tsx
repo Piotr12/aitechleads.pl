@@ -100,7 +100,7 @@ export default function Sources() {
           says 24 hours; two skills use shorter windows of their own), so the guide never quotes one. The README counts
           forty-one skills; the folder holds 42. The skill index lists <span className="font-mono">om-review-prs</span>{" "}
           and <span className="font-mono">om-close-fixed-issues</span> as interactive while the README&apos;s table
-          puts them with the autonomous ones; the guide follows the naming rule and calls them sweeps.
+          puts them with the autonomous ones. The guide uses one rule everywhere: a skill is autonomous when its own card says so, which is every om-auto-* skill plus om-pr-autopilot (13 in all).
         </p>
       </section>
     </Frame>

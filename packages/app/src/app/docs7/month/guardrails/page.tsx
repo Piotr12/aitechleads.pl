@@ -42,10 +42,10 @@ const DAY: Moment[] = [
         The payment provider announces an API change. PR #33 (charging co-op members per delivery) must wait.
       </>
     ),
-    guard: "Human-only labels",
+    guard: "Stop labels",
     outcome: (
       <>
-        Kasia sets <LabelChip name="blocked" />. Only people set or clear it; every skill reads it and stops there.
+        Kasia sets <LabelChip name="blocked" />. Every skill reads it, and none will merge past it until she clears it.
         Since #33 touches money it is also <LabelChip name="risk-high" />: tests for failure, retry and
         idempotency, a second person&apos;s review, and no self-QA.
       </>
@@ -80,7 +80,6 @@ const NEVER: { rule: React.ReactNode; src: string; srcName: string }[] = [
   { rule: <>apply <LabelChip name="qa-approved" /> from an authoring, review or merge skill (the one exception is audited self-QA, chapter 8)</>, src: UP.sdlcAt.automation, srcName: "SDLC.md" },
   { rule: <>set the <LabelChip name="qa" /> label, which belongs to the QA reviewer</>, src: UP.sdlcAt.labels, srcName: "SDLC.md" },
   { rule: <>merge a <LabelChip name="needs-qa" /> PR without <LabelChip name="qa-approved" />, or over <LabelChip name="qa-failed" />, <LabelChip name="blocked" />, <LabelChip name="do-not-merge" /></>, src: UP.sdlcAt.qaGate, srcName: "SDLC.md" },
-  { rule: <>set or clear <LabelChip name="blocked" /> or <LabelChip name="do-not-merge" /></>, src: UP.sdlcAt.labels, srcName: "SDLC.md" },
   { rule: <>turn CI green by weakening tests, deleting assertions or disabling checks</>, src: skillSource("om-auto-fix-pr"), srcName: "om-auto-fix-pr" },
   { rule: <>force-push unasked, or skip hooks with --no-verify</>, src: UP.readmeAt.overrides, srcName: "README" },
   { rule: <>push fixes to someone else&apos;s PR unless told to (<Cmd>--autofix</Cmd>)</>, src: skillSource("om-auto-review-pr"), srcName: "om-auto-review-pr" },
@@ -100,7 +99,7 @@ export default function Guardrails() {
         </>,
         <>A chain hands its lock from the issue to the PR without ever dropping it, so work is never observably unowned.</>,
         <>
-          <LabelChip name="blocked" /> and <LabelChip name="do-not-merge" /> belong to people. Skills only read them.
+          People stop the flow with <LabelChip name="blocked" /> or <LabelChip name="do-not-merge" />, and no skill merges past either. (<Cmd>om-auto-fix-pr</Cmd> may also leave a PR <LabelChip name="blocked" /> when a real blocker remains.)
         </>,
         <>
           CI goes green only through real fixes. A local validation run is the agent&apos;s evidence, never a stand-in
@@ -169,7 +168,7 @@ export default function Guardrails() {
         </h2>
         <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm leading-6">
           <li>Taking over someone else&apos;s claim: a deliberate <Cmd>--force</Cmd>, with an override comment.</li>
-          <li>Setting or clearing <LabelChip name="blocked" /> or <LabelChip name="do-not-merge" />.</li>
+          <li>Holding work with <LabelChip name="blocked" /> or <LabelChip name="do-not-merge" />, and deciding when to lift it.</li>
           <li>
             Being the second person on an auth or money change, which SDLC.md requires whatever the QA path. (A
             maintainer may also clear a stale <LabelChip name="in-progress" /> or waive a requirement, in writing, on

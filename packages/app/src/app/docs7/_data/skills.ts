@@ -19,8 +19,10 @@ export const LANES: Lane[] = [
 ];
 
 /**
- * `auto`: runs end to end without questions (the `om-auto-*` prefix, plus `om-pr-autopilot`, whose card marks it
- * autonomous). `interactive`: acts once, may ask, hands control back.
+ * One rule for "autonomous", used everywhere in the guide: the skill's own card in docs/skills/ marks it 🤖. That is
+ * every `om-auto-*` skill plus `om-pr-autopilot` (13). Everything else is interactive: it acts once, may ask, and
+ * hands control back. (The README's autonomous table also lists om-review-prs and om-close-fixed-issues, whose cards
+ * say interactive; the guide follows the cards.)
  * `block`: one of the building blocks other skills compose (README, "Skills invoke each other").
  * `sweep`: works over many items at once.
  */
@@ -33,6 +35,8 @@ export type Skill = {
   kind: Kind;
   block?: boolean;
   sweep?: boolean;
+  /** Optional discovery layer: shown in chapter 5's side panel and on the whole map, not counted as met. */
+  optional?: boolean;
   does: string;
 };
 
@@ -43,12 +47,12 @@ export const SKILLS: Skill[] = [
   { name: "om-ux-setup", lane: "setup", ch: 1, kind: "interactive", does: "Extracts the repo's own design contract (tokens, components, screen archetypes, conventions) into .uxproof/. Once per repo." },
 
   // Shape
-  { name: "om-discover", lane: "shape", ch: 5, kind: "interactive", does: "Product discovery from real material; writes product-brief.md with every claim tagged by its evidence and every decision owned by a person." },
-  { name: "om-synthetic-users", lane: "shape", ch: 5, kind: "interactive", does: "A panel of personas walks a flow; only what repeats across fresh panels counts, and everything stays tagged [SYNTHETIC], never evidence." },
-  { name: "om-mockup-prototype", lane: "shape", ch: 5, kind: "interactive", does: "Turns a brief flow into a neutral clickable discovery prototype, checked in a browser, before the backlog." },
+  { name: "om-discover", lane: "shape", ch: 5, kind: "interactive", optional: true, does: "Product discovery from real material; writes product-brief.md with every claim tagged by its evidence and every decision owned by a person." },
+  { name: "om-synthetic-users", lane: "shape", ch: 5, kind: "interactive", optional: true, does: "A panel of personas walks a flow; only what repeats across fresh panels counts, and everything stays tagged [SYNTHETIC], never evidence." },
+  { name: "om-mockup-prototype", lane: "shape", ch: 5, kind: "interactive", optional: true, does: "Turns a brief flow into a neutral clickable discovery prototype, checked in a browser, before the backlog." },
   { name: "om-brainstorm", lane: "shape", ch: 5, kind: "interactive", does: "The conversation before any artefact: alternatives (including building nothing), a challenger subagent, then one routing decision and a handoff brief." },
   { name: "om-ux-shape", lane: "shape", ch: 5, kind: "interactive", does: "Turns a vague UI or AI feature idea into a decided direction: smallest scope, states, interaction contract, validation plan." },
-  { name: "om-backlog", lane: "shape", ch: 5, kind: "interactive", does: "Turns a product brief or a spec's phasing into epics, stories and tasks, filed through om-prepare-issue after you approve the tree." },
+  { name: "om-backlog", lane: "shape", ch: 5, kind: "interactive", optional: true, does: "Turns a product brief or a spec's phasing into epics, stories and tasks, filed through om-prepare-issue after you approve the tree." },
   { name: "om-prepare-issue", lane: "shape", ch: 5, kind: "interactive", does: "Files one well-formed, deduplicated, labelled issue, with a linked spec or step-by-step guidance. Never implements." },
   { name: "om-auto-manage-issues", lane: "shape", ch: 5, kind: "auto", sweep: true, does: "Brings existing issues up to standard: missing labels, clarified wording, Definition of Ready check, spec-coverage check." },
   { name: "om-spec-writing", lane: "shape", ch: 5, kind: "interactive", does: "Writes or reviews a spec to staff-engineer standards, skeleton first, stopping at a hard Open Questions gate." },
@@ -114,9 +118,9 @@ export const DECISIONS: Decision[] = [
   { id: "assume", lane: "shape", ch: 5, text: "Confirm or correct the spec's assumptions", who: "Product owner, designer" },
   { id: "force", lane: "build", ch: 7, text: "Take over someone else's claim (--force, with a comment)", who: "A person, deliberately" },
   { id: "second", lane: "review", ch: 7, text: "Second person's review on auth or money", who: "Reviewer" },
-  { id: "block", lane: "merge", ch: 7, text: "Set or clear blocked / do-not-merge", who: "Any person" },
+  { id: "block", lane: "merge", ch: 7, text: "Hold work with blocked / do-not-merge", who: "Any person" },
   { id: "qa", lane: "qa", ch: 8, text: "Grant qa-approved, or fail it", who: "QA reviewer" },
-  { id: "merge", lane: "merge", ch: 9, text: "Decide to merge", who: "Maintainer or reviewer" },
+  { id: "merge", lane: "merge", ch: 9, text: "Decide to merge", who: "Whoever runs om-approve-merge-pr" },
   { id: "highlights", lane: "tidy", ch: 10, text: "Write the changelog Highlights", who: "Maintainer" },
   { id: "change", lane: "improve", ch: 11, text: "Decide what changes in the process", who: "Maintainer, with the team" },
 ];

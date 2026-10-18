@@ -1,5 +1,5 @@
 import { ChapterShell } from "../../_components/chapter";
-import { Artefact, Callout, Cmd, Ext, Figure, PersonTag, SkillChip, Story } from "../../_components/marks";
+import { Callout, Cmd, Ext, Figure, PersonTag, SkillChip, Story } from "../../_components/marks";
 import { meta, UP } from "../../_data/links";
 
 export const metadata = meta("Day 0: One command sets the table");
@@ -155,28 +155,14 @@ export default function DayZero() {
         </p>
         <p>
           Three people then switch on the optional layers they will need later. <PersonTag id="product" /> runs{" "}
-          <SkillChip name="om-setup-discovery-pipeline" />: two questions (is there a domain expert who is not the
-          product owner? is there a designer?), and SDLC.md gains a product owner role, a Discovery stage and a{" "}
+          <SkillChip name="om-setup-discovery-pipeline" />: three questions (is there a domain expert who is not the
+          product owner? is there a designer? is the specs folder right?), and SDLC.md gains a product owner role, a Discovery stage and a{" "}
           <em>Definition of Ready</em>. <PersonTag id="designer" /> runs <SkillChip name="om-ux-setup" />, which
           extracts the repo&apos;s own design system into <Cmd>.uxproof/</Cmd>. <PersonTag id="qa" /> runs{" "}
           <SkillChip name="om-prepare-test-env" />, which works out how the app boots, saves launch scripts in{" "}
           <Cmd>.ai/scripts</Cmd> and writes <Cmd>.ai/qa/test-env.json</Cmd> for every browser-driving skill to reuse.
         </p>
       </Story>
-
-      <Artefact title="The part of .ai/agentic.config.json the month will lean on" where="committed to the repo">
-        {`{
-  "baseBranch": "auto",
-  "tracker": "github",
-  "browser": { "provider": "agent-browser" },
-  "validation": { "commands": ["pnpm typecheck", "pnpm test", "pnpm build"] },
-  "labels": { "enabled": true, "pipeline": ["review", "changes-requested", …] },
-  "qaGate": true,
-  "ci": { "maxWaitMinutes": 40 },
-  "engine": { "loopStepThreshold": 20 },
-  "paths": { "runs": ".ai/runs", "specs": ".ai/specs", "qa": ".ai/qa" }
-}`}
-      </Artefact>
 
       <Callout title="Forgot to run setup?">
         Any skill started in a repo without the config runs setup first: interactively when you are there to answer,

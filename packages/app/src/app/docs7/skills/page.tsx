@@ -128,8 +128,10 @@ export default function Skills() {
           <span className="font-semibold text-foreground">How these were counted.</span> The list is the{" "}
           <Ext href={`${UP.repo}/tree/main/skills`}>skills/</Ext> folder: 42 skills. The README still says
           &ldquo;forty-one&rdquo;; the newest, <span className="font-mono">om-qa-buddy</span>, has no card yet, so its
-          link goes to its SKILL.md. Autonomous follows the naming rule (<span className="font-mono">om-auto-*</span>),
-          plus <span className="font-mono">om-pr-autopilot</span>, which its card marks autonomous.
+          link goes to its SKILL.md. One rule for &ldquo;autonomous&rdquo;: what each skill&apos;s card says. That is every{" "}
+          <span className="font-mono">om-auto-*</span> skill plus <span className="font-mono">om-pr-autopilot</span>.
+          The README&apos;s table also lists <span className="font-mono">om-review-prs</span> and{" "}
+          <span className="font-mono">om-close-fixed-issues</span> as autonomous; their cards say interactive.
         </p>
       </section>
     </Frame>

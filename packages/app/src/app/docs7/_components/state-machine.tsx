@@ -13,7 +13,7 @@ export function StateMachine({ focus = "all" }: { focus?: "review" | "qa" | "all
     { from: "merge-queue", to: "qa", how: "a QA reviewer starts testing (needs-qa only)", half: "qa" },
     { from: "qa", to: "merge-queue + qa-approved", how: "pass, with a QA head: <sha> line", half: "qa" },
     { from: "qa", to: "qa-failed", how: "fail: a hard block", half: "qa" },
-    { from: "any state", to: "blocked / do-not-merge", how: "set and cleared only by people", half: "human" },
+    { from: "any state", to: "blocked / do-not-merge", how: "people set them to stop the flow; no skill merges past them", half: "human" },
   ];
 
   return (
@@ -81,7 +81,7 @@ function StateMachineSvg({ dimReview, dimQa }: { dimReview: boolean; dimQa: bool
             blocked · do-not-merge
           </text>
           <text x={215} y={297} fontSize="12.5" className="fill-muted-foreground">
-            set and cleared only by people, at any point; they stop the flow wherever it is
+            people set them at any point to stop the flow; no skill merges past them
           </text>
         </g>
       </svg>

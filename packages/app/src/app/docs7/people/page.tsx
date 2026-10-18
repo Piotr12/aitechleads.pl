@@ -20,8 +20,8 @@ export default function People() {
       <section className="flex flex-col gap-3">
         <SectionTitle>Where each person acts</SectionTitle>
         <p className="max-w-prose text-sm text-muted-foreground">
-          A coloured mark means the person runs something in that lane (the number counts the moments); a diamond
-          means they also hold a decision there.
+          A dot means the person runs something in that lane; a diamond means they also decide something there. Each
+          person&apos;s main command is on their card below.
         </p>
         <ul className="flex flex-col gap-2 md:hidden">
           {PEOPLE.map((p) => {
@@ -41,7 +41,7 @@ export default function People() {
                         key={l.id}
                         className={cn("inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium text-white", p.tone)}
                       >
-                        <span className="opacity-70 tabular-nums">{i + 1}</span> {l.name} · {steps.length}
+                        <span className="opacity-70 tabular-nums">{i + 1}</span> {l.name}
                         {steps.some((s) => s.decide) && <DecisionMark className="size-3 fill-white text-white" />}
                       </li>
                     );
@@ -81,14 +81,11 @@ export default function People() {
                         <td key={l.id} className="px-2 py-2 text-center">
                           {steps.length > 0 ? (
                             <span
-                              className={cn(
-                                "inline-flex h-7 min-w-9 items-center justify-center gap-1 rounded-md px-1.5 text-xs font-semibold text-white tabular-nums",
-                                p.tone,
-                              )}
+                              className="inline-flex items-center justify-center gap-1"
                               title={steps.map((s) => s.run).join("\n")}
                             >
-                              {steps.length}
-                              {decides && <DecisionMark className="size-3 fill-white text-white" />}
+                              <span className={cn("inline-block size-3.5 rounded-full", p.tone)} aria-label="acts here" />
+                              {decides && <DecisionMark />}
                             </span>
                           ) : (
                             <span className="text-muted-foreground/40">·</span>
@@ -102,7 +99,6 @@ export default function People() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground">Numbers count the moments in that person&apos;s flow, per lane.</p>
       </section>
 
       <section className="flex flex-col gap-3">

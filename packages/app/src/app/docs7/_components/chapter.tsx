@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Frame } from "./frame";
-import { LaneMap } from "./lane-map";
+import { ChapterMap } from "./lane-map";
 import { Cast, Know, SkillChip } from "./marks";
 import { SKILLS } from "../_data/skills";
 import { CHAPTERS, chapter, chapterHref } from "../_data/story";
@@ -11,7 +11,7 @@ import { CHAPTERS, chapter, chapterHref } from "../_data/story";
  */
 export function ChapterShell({ slug, know, children }: { slug: string; know: ReactNode[]; children: ReactNode }) {
   const c = chapter(slug);
-  const fresh = SKILLS.filter((s) => s.ch === c.n);
+  const fresh = SKILLS.filter((s) => s.ch === c.n && !s.optional);
 
   return (
     <Frame
@@ -44,7 +44,7 @@ export function ChapterShell({ slug, know, children }: { slug: string; know: Rea
       {children}
 
       <Know items={know} />
-      <LaneMap upTo={c.n} />
+      <ChapterMap upTo={c.n} />
     </Frame>
   );
 }
